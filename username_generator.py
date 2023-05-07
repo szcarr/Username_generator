@@ -29,7 +29,13 @@ def start(
             mode = input("Want to save name? y/N\n> ")
             if mode == "Y" or mode == "y":
                 save(save_location, username)
-        else:
+            try: # By typing 'username' -s when prompted it saves name typed. Example: > OXRAVEBUGBLOOD -s    <-- saves OXRAVEBUGBLOOD to file
+                if len(mode.split(" ")) == 2 and mode.split(" ")[1] == "-s":
+                    save(save_location, mode.split(" ")[0])
+            except:
+                pass
+
+        elif mode == "n" or mode == "N":
             break
         first_run = False
 
@@ -100,7 +106,6 @@ def generate_username(
         username = ""
         for e in username_list:
             username += e
-
     return username
 
 def roll_random_chars(username, max_username_length):
