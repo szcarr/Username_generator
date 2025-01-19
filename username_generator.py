@@ -32,6 +32,7 @@ def start(
             try: # By typing 'username' -s when prompted it saves name typed. Example: > OXRAVEBUGBLOOD -s    <-- saves OXRAVEBUGBLOOD to file
                 if len(mode.split(" ")) == 2 and mode.split(" ")[1] == "-s":
                     save(save_location, mode.split(" ")[0])
+                    print("\n** Saved username\n")
             except:
                 pass
 
@@ -70,7 +71,7 @@ def generate_username(
         rolled_name = list_of_names[random.randint(0, len(list_of_names) - 1)]
         if len(username) + len(rolled_name) > max_username_length:
             continue
-        if rolled_name in username: # Is a quick but not accurate fix might expand this in the future
+        if rolled_name in username: # Is a quick but not accurate fix might expand on this in the future
             continue
 
         if random.randint(0, 100) > 92: # Rolling for characters front
@@ -155,14 +156,12 @@ def find_smallest_length_of_name(lst):
         
 def parse_kwargs():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--source', type = str, default = "None", help = "user can specify one image, or a directory of images. needs to specify absolute path if a directory")
-    parser.add_argument('--save-location', type = str, default = DEFAULT_SAVELOCATION, help = "sets the save location for processed images, please specify the absolute path")
-    parser.add_argument('--max-username-length', type = int, default = 16, help = "sets the save location for processed images, please specify the absolute path")
+    parser.add_argument('--source', type = str, default = "None", help = "user can specify a txt file with user saved names to generate from.")
+    parser.add_argument('--save-location', type = str, default = DEFAULT_SAVELOCATION, help = "sets the save location for processed names, please specify using absolute path. Can also use relative path.")
+    parser.add_argument('--max-username-length', type = int, default = 16, help = "sets the max length a generated username can have.")
 
     return parser.parse_args()
 
 if __name__ == "__main__":
     kwargs = parse_kwargs()
     start(**vars(kwargs))
-
-# python.exe ./username_generator.py --source names.txt --max-username-length 16
